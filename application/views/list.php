@@ -36,7 +36,7 @@
         </div>
         <!-- <h3 class="float-start my-3" >Users List</h3><a href="<?php //echo base_url().'user/create'; ?>" class="float-end btn btn-primary my-3">Create</a> -->
 
-        <h3 class="float-start my-3" >Users List</h3><a href="javascript:void(0);" onclick="showModal();" class="float-end btn btn-primary my-3">Create</a>
+        <h3 class="float-start my-3" >Users List</h3><button type="button" data-bs-toggle="modal" data-bs-target="#createUserModal" class="float-end btn btn-primary my-3">Create</button>
 
         <table class="table table-hover table-bordered table-striped">
             <thead>
@@ -56,8 +56,52 @@
                 <td><?php echo $user['name']; ?></td>
                 <td><?php echo $user['email']; ?></td>
                 <td>
-                    <a href="<?php echo base_url().'user/edit/'.$user['user_id']; ?>" class="btn btn-primary">Edit</a>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#EditUserModal<?php echo $user['user_id']; ?>" class="btn btn-primary">Edit</button>
                     <a href="<?php echo base_url().'user/delete/'.$user['user_id']; ?>" class="btn btn-danger">Delete</a>
+
+<!-- Modal -->
+    <div class="modal fade" id="EditUserModal<?php echo $user['user_id']; ?>" tabindex="-1" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="ajaxRes"></p>
+            <form name="createUser" id="createUser" method="post" action="<?php echo base_url().'User/create'; ?>">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group mb-3">
+                    <label>Name</label>
+                    <input type="text" name="name" id="name" value="<?php echo $user['name']; ?>" class="form-control">
+                    <?php //echo form_error('name'); ?>
+                    <p class="nameError"></p>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" value="<?php echo $user['email']; ?>" class="form-control">
+                    <?php //echo form_error('email'); ?>
+                    <p class="emailError"></p>
+                </div>
+                <div class="form-group mb-3">
+                <!-- <button class="btn btn-primary">Create</button>
+                <a href="<?php //echo base_url().'user/index'; ?>" class="btn btn-secondary">Cancel</a> -->
+                </div>
+            </div>
+        </div>
+       
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
                 </td>
                 
                 </tr>
@@ -123,16 +167,16 @@
 
 
     <script type="text/javascript">
-        function showModal(){
-            $("#createUserModal").modal("show");
-        }
+        // function showModal(){
+        //     $("#createUserModal").modal("show");
+        // }
 
         $("body").on("submit","#createUser",function(e){
             e.preventDefault();
             console.log($(this).serializeArray());
             // alert();
             $.ajax({
-                url: '<?php echo site_url().'index.php/User/save'; ?>',
+                url: '<?php echo site_url().'create-user'; ?>',
                 type: 'POST',
                 data: $(this).serializeArray(),
                 dataType: 'json',
