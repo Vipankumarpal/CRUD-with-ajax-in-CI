@@ -79,17 +79,44 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="createUser" tabindex="-1" >
+    <div class="modal fade" id="createUserModal" tabindex="-1" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div id="response">
-
+          <div class="modal-body">
+            <p class="ajaxRes"></p>
+            <form name="createUser" id="createUser" method="post" action="<?php echo base_url().'User/create'; ?>">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group mb-3">
+                    <label>Name</label>
+                    <input type="text" name="name" id="name" value="<?php echo set_value('name'); ?>" class="form-control">
+                    <?php //echo form_error('name'); ?>
+                    <p class="nameError"></p>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" value="<?php echo set_value('email'); ?>" class="form-control">
+                    <?php //echo form_error('email'); ?>
+                    <p class="emailError"></p>
+                </div>
+                <div class="form-group mb-3">
+                <!-- <button class="btn btn-primary">Create</button>
+                <a href="<?php //echo base_url().'user/index'; ?>" class="btn btn-secondary">Cancel</a> -->
+                </div>
+            </div>
+        </div>
+       
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create</button>
           </div>
-
+           </form>
+          </div>
         </div>
       </div>
     </div>
@@ -97,32 +124,22 @@
 
     <script type="text/javascript">
         function showModal(){
-            $("#createUser").modal("show");
-
-            $.ajax({
-                url: '<?php echo base_url().'User/create'; ?>',
-                type: 'POST',
-                data: {},
-                dataType: 'json',
-                success: function(response){
-                    $("#response").html(response["html"]);
-                }
-            })
+            $("#createUserModal").modal("show");
         }
 
         $("body").on("submit","#createUser",function(e){
             e.preventDefault();
+            console.log($(this).serializeArray());
             // alert();
             $.ajax({
-                url: '<?php echo base_url().'User/save'; ?>',
+                url: '<?php echo site_url().'index.php/User/save'; ?>',
                 type: 'POST',
                 data: $(this).serializeArray(),
                 dataType: 'json',
                 success: function(response){
                     //$("#response").html(response["html"]);
 
-                    if(response['status']== 0 ){
-
+                    if(response.status == 0 ){
                         if(response["name"] != ""){
                             $(".nameError").html(response["name"]);
                         }
@@ -130,6 +147,8 @@
                         if(response["email"] != ""){
                             $(".emailError").html(response["email"]);
                         }
+                    }else{
+                        $(".ajaxRes").text('Success').addClass('text-success');
                     }
                 }
             })

@@ -58,7 +58,7 @@
                 $formArray['created_at'] = date('Y-m-d');
                 $this->User_model->create($formArray);
             
-                 $response['status'] = 1;
+                $response['status'] = 1;
             } else{
                 $response['status'] = 0;
                 $response['name'] = strip_tags(form_error('name'));
