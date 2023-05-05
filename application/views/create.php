@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,34 +9,43 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/bootstrap.min.css';?>" >
 </head>
 <body>
-    <div class="navbar navbar-dark bg-dark">
+   <!--  <div class="navbar navbar-dark bg-dark">
         <div class="container">
             <a href="#" class="navbar-brand">Crud Application</a>
         </div>
-    </div>
+    </div> -->
     <div class="container pt-3">
-        <h3>Create user</h3>
-        <hr>
-        <form name="createUser" method="post" action="<?php echo base_url().'index.php/User/create'; ?>">
+        <!-- <h3>Create user</h3>
+        <hr> -->
+        <div class="modal-body">
+        <form name="createUser" id="createUser" method="post" action="<?php echo base_url().'User/create'; ?>">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group mb-3">
                     <label>Name</label>
-                    <input type="text" name="name" value="<?php echo set_value('name'); ?>" class="form-control">
-                    <?php echo form_error('name'); ?>
+                    <input type="text" name="name" id="name" value="<?php echo set_value('name'); ?>" class="form-control">
+                    <?php //echo form_error('name'); ?>
+                    <p class="nameError"></p>
                 </div>
                 <div class="form-group mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?php echo set_value('email'); ?>" class="form-control">
-                    <?php echo form_error('email'); ?>
+                    <input type="email" name="email" id="email" value="<?php echo set_value('email'); ?>" class="form-control">
+                    <?php //echo form_error('email'); ?>
+                    <p class="emailError"></p>
                 </div>
                 <div class="form-group mb-3">
-                <button class="btn btn-primary">Create</button>
-                <a href="<?php echo base_url().'index.php/user/index'; ?>" class="btn btn-secondary">Cancel</a>
+                <!-- <button class="btn btn-primary">Create</button>
+                <a href="<?php //echo base_url().'user/index'; ?>" class="btn btn-secondary">Cancel</a> -->
                 </div>
             </div>
         </div>
-        </form>
+       
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+           </form>
     </div>
 </body>
 </html>
